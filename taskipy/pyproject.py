@@ -1,4 +1,7 @@
-import tomli
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
 
 from pathlib import Path
 from typing import Any, Dict, MutableMapping, Optional, Union
@@ -92,10 +95,10 @@ class PyProject:
                 file_path = Path(file_path).resolve()
 
             with open(file_path, 'rb') as file:
-                return tomli.load(file)
+                return tomllib.load(file)
         except FileNotFoundError:
             raise MissingPyProjectFileError()
-        except tomli.TOMLDecodeError as e:
+        except tomllib.TOMLDecodeError as e:
             raise MalformedPyProjectError(reason=str(e))
 
     @staticmethod

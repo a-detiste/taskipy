@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import tomli
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
 import secrets
 import subprocess
 import webbrowser
@@ -9,7 +12,7 @@ from pathlib import Path
 def create_release_commit():
     cwd = Path.cwd()
     with open(cwd / "pyproject.toml", "rb") as file:
-        pyproject = tomli.load(file)
+        pyproject = tomllib.load(file)
     version = pyproject["tool"]["poetry"]["version"]
     branch = f"release-{version}-{secrets.token_hex(12)}"
 
